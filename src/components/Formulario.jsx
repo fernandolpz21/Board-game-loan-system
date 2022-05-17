@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {useAlert} from 'react-alert';
+
 /*
 ¿Qué es un Hook? Un Hook es una función especial que permite “conectarse” a características de React. Por ejemplo, useState es un Hook que te permite añadir el estado de React a un componente de función. Más adelante hablaremos sobre otros Hooks.
 
@@ -19,7 +19,7 @@ No debes de modificar la variable cliente directamente, se tiene que usar el mod
 
 */
 
-function Formulario() {
+function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de los props 
 
     // Los hooks se deben de escribir antes de funciones.
     //NO se deben de escribir dentro de condicionales ni después de los return
@@ -40,7 +40,7 @@ function Formulario() {
 
     
     
-    const {nombre, editorial, cliente, correo, fecha, condiciones} = juego;
+    const {nombre, editorial, cliente, email, fecha, condiciones} = juego;
 
     const handleChange = e => {
         setJuego({...juego, [e.target.name]:e.target.value}); // El setJuego va a ser xuna copia de la variable juego pero se le cambia el valor al campo que se está sobreescribiendo
@@ -51,11 +51,22 @@ function Formulario() {
     const handleSubmit = e => {
         e.preventDefault();
         console.log(juego)
-        if( [nombre, editorial, cliente, correo, fecha, condiciones].includes('')){
+        if( [nombre, editorial, cliente, email, fecha, condiciones].includes('')){
             setError(true);
         }
         else{
             setError(false)
+            setPrestamos([...prestamos, juego]) //Pasamos al arreglo el arreglo original y le agregamos el nuevo juego. Así podemos pasar un arreglo de objetos a APP
+
+            //Reset Form
+            setJuego({
+                "nombre": '',
+                "editorial": '',
+                "cliente": '',
+                "email": '',
+                "fecha": '',
+                "condiciones": ''
+            });
             /*
             try {
                 addToDB(patient);
@@ -97,6 +108,7 @@ function Formulario() {
                 <div className="mb-5">
                     <label htmlFor="juego" className="block text-grey-700 font-bold">Juego</label>
                     <input id='juego' type="text" placeholder="Nombre del Juego" className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                    value={nombre}
                     name='nombre'
                     onChange={handleChange}/>
                 </div>
@@ -104,6 +116,7 @@ function Formulario() {
                 <div className="mb-5">
                     <label htmlFor="editorial" className="block text-grey-700 font-bold">Editorial</label>
                     <input id='editorial' type="text" placeholder="Nombre de la editorial" className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                    value={editorial}
                     name='editorial'
                     onChange={handleChange}/>
                 </div>
@@ -111,6 +124,7 @@ function Formulario() {
                 <div className="mb-5">
                     <label htmlFor="cliente" className="block text-grey-700 font-bold">Cliente</label>
                     <input id='cliente' type="text" placeholder="Nombre del cliente" className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                    value={cliente}
                     name='cliente'
                     onChange={handleChange}/>
                 </div>
@@ -118,6 +132,7 @@ function Formulario() {
                 <div className="mb-5">
                     <label htmlFor="email" className="block text-grey-700 font-bold">Email Cliente</label>
                     <input id='email' type="email" placeholder="Email de contacto al cliente" className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                    value={email}
                     name='email'
                     onChange={handleChange}/>
                 </div>
@@ -125,6 +140,7 @@ function Formulario() {
                 <div className="mb-5">
                     <label htmlFor="fecha" className="block text-grey-700 font-bold">Fecha de Préstamo</label>
                     <input id='fecha' type="date" placeholder="" className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                    value={fecha}
                     name='fecha'
                     onChange={handleChange}/>
                 </div>
@@ -132,6 +148,7 @@ function Formulario() {
                 <div className="mb-5">
                     <label htmlFor="condiciones" className="block text-grey-700 font-bold">Condiciones del juego</label>
                     <textarea id='condiciones' className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md" placeholder="Describe aquí si el juego tiene algún desperfecto o si está en buenas condiciones"
+                    value={condiciones}
                     name='condiciones'
                     onChange={handleChange}/>
                 </div>

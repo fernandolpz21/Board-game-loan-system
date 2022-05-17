@@ -8,11 +8,18 @@ import ListadoPrestamos from './components/ListadoPrestamos'
 
 function App() {
 
+  const [prestamos, setPrestamos] = useState([]); //Creamos un arreglo vacío como valor inicial
+
+
+
   return(
     <div className='container mx-auto mt-20'>
       <Header />
       <div className='mt-12 md:flex'>
-        <Formulario />
+        <Formulario 
+          prestamos={prestamos}
+          setPrestamos={setPrestamos} // Agregamos un prop (property) a formulario para poder extraerle información y después pasarla al listado de préstamos
+        />
         <ListadoPrestamos />
 
       </div>
