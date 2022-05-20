@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import Error from './Error';
 
 /*
 ¿Qué es un Hook? Un Hook es una función especial que permite “conectarse” a características de React. Por ejemplo, useState es un Hook que te permite añadir el estado de React a un componente de función. Más adelante hablaremos sobre otros Hooks.
@@ -156,11 +157,9 @@ function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de l
                 
                 <input type='submit' className="bg-blue-700 p-3 w-full text-white uppercase font-bold hover:bg-blue-800 cursor-pointer transition-colors rounded-sm" value='Añadir Préstamo'/>
 
-                {error && 
-                    <div className='bg-red-800 text-white text-center p-3 uppercase font-bold mb-3 rounded-md mt-2'>
-                        <p>Todos los campos son obligatorios</p>
-                    </div>
-                }
+                {error && <Error><p>Todos los campos son obligatorios</p></Error>}
+                    
+                
             </form>
         </div>
     );
