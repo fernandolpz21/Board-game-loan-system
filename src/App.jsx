@@ -20,7 +20,7 @@ function App() {
           prestamos={prestamos}
           setPrestamos={setPrestamos} // Agregamos un prop (property) a formulario para poder extraerle información y después pasarla al listado de préstamos
         />
-        <ListadoPrestamos />
+        <ListadoPrestamos prestamos={prestamos} />
 
       </div>
     </div>

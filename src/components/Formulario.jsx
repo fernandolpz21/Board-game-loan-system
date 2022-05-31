@@ -28,9 +28,17 @@ function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de l
     
     
     const [error, setError] = useState(false);
+    const generarId = () => {
+        const random = Math.random().toString(36).substring(2); //Obtener un texto aleatorio con números y letras con base al argumento de toString. Siempre aparece como 0.XXX, por lo que usamos el substring(2) para eiminar los primeros 2 caracteres
+        const fecha = Date.now().toString(36)
+
+        return fecha + random;
+    
+    }
 
     //game register fields
     const [juego , setJuego] = useState({
+        id: generarId(),
         "nombre": '',
         "editorial": '',
         "cliente": '',
@@ -46,6 +54,8 @@ function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de l
     const handleChange = e => {
         setJuego({...juego, [e.target.name]:e.target.value}); // El setJuego va a ser xuna copia de la variable juego pero se le cambia el valor al campo que se está sobreescribiendo
     }
+
+    
 
     
     //copies game data and changes the target of the onchange
