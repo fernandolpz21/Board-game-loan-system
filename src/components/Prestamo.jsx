@@ -27,6 +27,18 @@ const Prestamo = ({prestamo}) =>{
                 <span>{condiciones}</span>                
             </p>
 
+            <div className="flex justify-between mt-10">
+                <button type="button"
+                    className="py-2 px-10 bg-blue-700 hover:bg-blue-800 text-white uppercase font-bold cursor-pointer transition-colors rounded-lg">
+                    Editar
+                </button>
+
+                <button type="button"
+                    className="py-2 px-10 bg-red-800 hover:bg-red-900 text-white uppercase font-bold cursor-pointer transition-colors rounded-lg">
+                    Eliminar
+                </button>
+            </div>
+
         </div>
     );
 }

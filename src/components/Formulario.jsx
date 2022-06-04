@@ -33,23 +33,23 @@ function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de l
         const fecha = Date.now().toString(36)
 
         return fecha + random;
-    
+
     }
 
     //game register fields
     const [juego , setJuego] = useState({
-        id: generarId(),
+        "id": generarId(),
         "nombre": '',
         "editorial": '',
         "cliente": '',
-        "email": '',
+        "correo": '',
         "fecha": '',
         "condiciones": ''
     });
 
     
     
-    const {nombre, editorial, cliente, email, fecha, condiciones} = juego;
+    const {nombre, editorial, cliente, correo, fecha, condiciones} = juego;
 
     const handleChange = e => {
         setJuego({...juego, [e.target.name]:e.target.value}); // El setJuego va a ser xuna copia de la variable juego pero se le cambia el valor al campo que se está sobreescribiendo
@@ -62,7 +62,7 @@ function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de l
     const handleSubmit = e => {
         e.preventDefault();
         console.log(juego)
-        if( [nombre, editorial, cliente, email, fecha, condiciones].includes('')){
+        if( [nombre, editorial, cliente, correo, fecha, condiciones].includes('')){
             setError(true);
         }
         else{
@@ -71,10 +71,11 @@ function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de l
 
             //Reset Form
             setJuego({
+                "id": generarId(),
                 "nombre": '',
                 "editorial": '',
                 "cliente": '',
-                "email": '',
+                "correo": '',
                 "fecha": '',
                 "condiciones": ''
             });
@@ -141,10 +142,10 @@ function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de l
                 </div>
 
                 <div className="mb-5">
-                    <label htmlFor="email" className="block text-grey-700 font-bold">Email Cliente</label>
-                    <input id='email' type="email" placeholder="Email de contacto al cliente" className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                    value={email}
-                    name='email'
+                    <label htmlFor="correo" className="block text-grey-700 font-bold">Email Cliente</label>
+                    <input id='correo' type="correo" placeholder="Email de contacto al cliente" className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                    value={correo}
+                    name='correo'
                     onChange={handleChange}/>
                 </div>
 
