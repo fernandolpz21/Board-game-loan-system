@@ -1,8 +1,8 @@
 import Prestamo from "./Prestamo";
 
-
-function ListadoPrestamos({prestamos}) {
+function ListadoPrestamos({prestamos, setPrestamo}) {
     // -- Use h-screen to make an element span the entire height of the viewport.
+
     return ( 
         <div className="md:w-1/2 lg:w-3/5 md:h-screen overflow-y-scroll"> 
             {prestamos && prestamos.length ? ( //Si es que el tamaño del arreglo préstamos === 0
@@ -19,6 +19,7 @@ function ListadoPrestamos({prestamos}) {
                             //key = {index} //Siempre que usamos .map es importante poner un prop llamado key para poder identificar a cada elemento con un índice único. El problema es que esto no es una buena práctica de react porque el índice es mutable ya que puedes modificar el arreglo y por ende modificar el index
                             key = {element.id}
                             prestamo={element}
+                            setPrestamo={setPrestamo}
                         />
                     ))}
                 </>
@@ -35,10 +36,6 @@ function ListadoPrestamos({prestamos}) {
 
                 </>
             )}
-
-            
-
-            
         </div>
      );
 }

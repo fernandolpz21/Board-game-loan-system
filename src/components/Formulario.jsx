@@ -20,7 +20,7 @@ No debes de modificar la variable cliente directamente, se tiene que usar el mod
 
 */
 
-function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de los props 
+function Formulario({prestamos, setPrestamos, prestamo, setPrestamo}) { //Hacemos un destructuring de los props 
 
     // Los hooks se deben de escribir antes de funciones.
     //NO se deben de escribir dentro de condicionales ni después de los return
@@ -28,6 +28,9 @@ function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de l
     
     
     const [error, setError] = useState(false);
+
+    
+
     const generarId = () => {
         const random = Math.random().toString(36).substring(2); //Obtener un texto aleatorio con números y letras con base al argumento de toString. Siempre aparece como 0.XXX, por lo que usamos el substring(2) para eiminar los primeros 2 caracteres
         const fecha = Date.now().toString(36)
@@ -38,7 +41,6 @@ function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de l
 
     //game register fields
     const [juego , setJuego] = useState({
-        "id": generarId(),
         "nombre": '',
         "editorial": '',
         "cliente": '',
@@ -49,29 +51,64 @@ function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de l
 
     
     
+
     const {nombre, editorial, cliente, correo, fecha, condiciones} = juego;
 
     const handleChange = e => {
         setJuego({...juego, [e.target.name]:e.target.value}); // El setJuego va a ser xuna copia de la variable juego pero se le cambia el valor al campo que se está sobreescribiendo
     }
 
-    
+
+    useEffect(() => {//escucha por los cambios que sucedan en las dependencias []
+        if(Object.keys(prestamo).length > 0){
+            setJuego({
+                "nombre": prestamo.nombre,
+                "editorial": prestamo.editorial,
+                "cliente": prestamo.cliente,
+                "correo": prestamo.correo,
+                "fecha": prestamo.fecha,
+                "condiciones":prestamo.condiciones
+            });
+        }
+    }, [prestamo]); 
 
     
     //copies game data and changes the target of the onchange
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(juego)
+        //console.log(juego) //   -------------------------console.log
+
+        
         if( [nombre, editorial, cliente, correo, fecha, condiciones].includes('')){
             setError(true);
         }
         else{
             setError(false)
-            setPrestamos([...prestamos, juego]) //Pasamos al arreglo el arreglo original y le agregamos el nuevo juego. Así podemos pasar un arreglo de objetos a APP
 
-            //Reset Form
+            if(prestamo.id){
+                // Editando un registro
+                juego.id = prestamo.id//El id que tenemos se lo ponemos a un nuevo objeto para que cree uno nuevo y actualizado, por lo que el prestamo nos va a quedar desactualizado
+
+                
+                const prestamosActualizados = prestamos.map(prestamoState =>  //Prestamo state hace referencia al primer state definido en App, que es el que contiene a toda la lista de los préstamos 
+                    prestamoState.id === prestamo.id ? juego : prestamoState // Si tienen el mimo ID, regresa el juego actualizado, si no, déjalo como está
+                ) // Ojo: No se ponen las llaves porque si no lo toma como un objeto a todo lo que esté dentro
+
+
+                setPrestamos(prestamosActualizados) 
+                setPrestamo({}) //Regresamos el prestamo a editar a un objeto vacío
+
+                
+
+            }  else {
+                // Nuevo registro
+                juego.id = generarId(),
+
+                setPrestamos([...prestamos, juego]) //Pasamos al arreglo el arreglo original y le agregamos el nuevo juego. Así podemos pasar un arreglo de objetos a APP
+        
+            } 
+            //Reset Form [después de editar o crear]
             setJuego({
-                "id": generarId(),
                 "nombre": '',
                 "editorial": '',
                 "cliente": '',
@@ -166,7 +203,10 @@ function Formulario({prestamos, setPrestamos}) { //Hacemos un destructuring de l
                 </div>
 
                 
-                <input type='submit' className="bg-blue-700 p-3 w-full text-white uppercase font-bold hover:bg-blue-800 cursor-pointer transition-colors rounded-sm" value='Añadir Préstamo'/>
+                <input type='submit' className="bg-blue-700 p-3 w-full text-white uppercase font-bold hover:bg-blue-800 cursor-pointer transition-colors rounded-sm" 
+                value={prestamo.id ? 'Editar Préstamo' : 'Añadir Préstamo'
+                // Si el prestamo tiene un id, entonces significa que se está editando
+                }/> 
 
                 {error && <Error><p>Todos los campos son obligatorios</p></Error>}
                     

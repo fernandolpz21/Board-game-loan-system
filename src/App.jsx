@@ -10,6 +10,8 @@ function App() {
 
   const [prestamos, setPrestamos] = useState([]); //Creamos un arreglo vacío como valor inicial
 
+  const[prestamo, setPrestamo] = useState({}); //Para recabar la información al darle click al botón de edición
+
 
 
   return(
@@ -19,8 +21,11 @@ function App() {
         <Formulario 
           prestamos={prestamos}
           setPrestamos={setPrestamos} // Agregamos un prop (property) a formulario para poder extraerle información y después pasarla al listado de préstamos
+          prestamo ={prestamo}
+          setPrestamo={setPrestamo}
         />
-        <ListadoPrestamos prestamos={prestamos} />
+        <ListadoPrestamos prestamos={prestamos} 
+        setPrestamo={setPrestamo}/>
 
       </div>
     </div>
