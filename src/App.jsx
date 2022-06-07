@@ -12,7 +12,12 @@ function App() {
 
   const[prestamo, setPrestamo] = useState({}); //Para recabar la información al darle click al botón de edición
 
+  const eliminarPrestamo = (id) => {
+    const prestamosActualizados = prestamos.filter(prestamo => prestamo.id !== id) //Regresa todos los préstamos que no tengan esa id
+    //console.log(prestamosActualizados)
 
+    console.log(setPrestamos(prestamosActualizados))
+  }
 
   return(
     <div className='container mx-auto mt-20'>
@@ -25,7 +30,9 @@ function App() {
           setPrestamo={setPrestamo}
         />
         <ListadoPrestamos prestamos={prestamos} 
-        setPrestamo={setPrestamo}/>
+        setPrestamo={setPrestamo}
+        eliminarPrestamo = {eliminarPrestamo}
+        />
 
       </div>
     </div>

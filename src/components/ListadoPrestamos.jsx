@@ -1,6 +1,6 @@
 import Prestamo from "./Prestamo";
 
-function ListadoPrestamos({prestamos, setPrestamo}) {
+function ListadoPrestamos({prestamos, setPrestamo, eliminarPrestamo}) {
     // -- Use h-screen to make an element span the entire height of the viewport.
 
     return ( 
@@ -20,6 +20,7 @@ function ListadoPrestamos({prestamos, setPrestamo}) {
                             key = {element.id}
                             prestamo={element}
                             setPrestamo={setPrestamo}
+                            eliminarPrestamo = {eliminarPrestamo}
                         />
                     ))}
                 </>
