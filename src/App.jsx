@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import logo from './logo.svg'
 import './App.css'
 import Header from './components/Header'
@@ -7,16 +7,20 @@ import ListadoPrestamos from './components/ListadoPrestamos'
 
 
 function App() {
-
-  const [prestamos, setPrestamos] = useState([]); //Creamos un arreglo vacío como valor inicial
-
+  // En LS no puedes guardar arreglos, como el que se usa para los préstamos, por lo que hay que guardar únicamente strings
+  const [prestamos, setPrestamos] = useState(JSON.parse(localStorage.getItem('prestamos')) ?? []); // Si no hay nada en Local Storage entonces asigna un arreglo vacío. Si hay algo, recupéralo
+  //Convertimos el string a arreglo con json.parse
+  
   const[prestamo, setPrestamo] = useState({}); //Para recabar la información al darle click al botón de edición
+
+  useEffect(() => {
+    localStorage.setItem('prestamos', JSON.stringify( prestamos ))
+  }, [prestamos])
 
   const eliminarPrestamo = (id) => {
     const prestamosActualizados = prestamos.filter(prestamo => prestamo.id !== id) //Regresa todos los préstamos que no tengan esa id
     //console.log(prestamosActualizados)
-
-    console.log(setPrestamos(prestamosActualizados))
+    setPrestamos(prestamosActualizados)
   }
 
   return(
@@ -38,7 +42,7 @@ function App() {
     </div>
   )
 
-  /* APP DEFAOULT
+  /* APP DEFAULT
   const [count, setCount] = useState(0)
 
   return (
